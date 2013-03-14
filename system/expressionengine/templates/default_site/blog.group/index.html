@@ -1,0 +1,35 @@
+{exp:switchee variable="{segment_2}" parse="inward"} 
+     
+	{case value="#^P(\d+)$#|''"}
+		<div id="list">
+		<ul>
+		{exp:channel:entries
+			channel="blog" limit="1"
+			dynamic="no"
+			disable="categories|category_fields|member_data"
+			paginate="bottom"}
+			<li><a href="{url_title_path='blog'}">{title}</a> <span>- {entry_date format="%F %j, %Y"}</span>
+
+		{paginate}
+            <p>Page {current_page} of {total_pages} pages {pagination_links}</p>
+        {/paginate}
+		{/exp:channel:entries}
+		</ul>
+		</div>
+	{/case}
+	
+	{case default="Yes"}
+		<div id="main">
+		{exp:channel:entries
+			channel="blog"
+			limit="1"
+			dynamic="no"
+			url_title="{segment_2}"
+			disable="categories|category_fields|member_data|pagination"}
+			<h3>{title}</h3> <span>- {entry_date format="%F %j, %Y"}</span>
+			<p>{cf_blog_body}</p>
+		{/exp:channel:entries}
+		</div>
+	{/case}
+     
+{/exp:switchee} 
