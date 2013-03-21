@@ -12,4 +12,7 @@ images/pm_attachments/
 sized/
 thumbs/
 _thumbs/
+system/expressionengine/config/config.php
+system/expressionengine/config/database.php
+images/*
 */expressionengine/cache/*
