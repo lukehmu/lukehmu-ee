@@ -1,35 +1,49 @@
-{exp:switchee variable="{segment_2}" parse="inward"} 
-     
-	{case value="#^P(\d+)$#|''"}
-		<div id="list">
-		<ul>
-		{exp:channel:entries
-			channel="blog" limit="1"
-			dynamic="no"
-			disable="categories|category_fields|member_data"
-			paginate="bottom"}
-			<li><a href="{url_title_path='blog'}">{title}</a> <span>- {entry_date format="%F %j, %Y"}</span>
+{embed='includes/header' location='blog'}
+<div>
+	{exp:switchee variable="{segment_2}" parse="inward"} 
+		 
+		{case value="#^P(\d+)$#|''"}
+			<ul>
+			{exp:channel:entries
+				channel="blog" limit="1"
+				dynamic="no"
+				disable="categories|category_fields|member_data"
+				paginate="bottom"}
+				<li><a href="{url_title_path='blog'}">{title}</a> <span>- {entry_date format="%F %j, %Y"}</span>
+			</ul>
+			{paginate}
+			{if {total_pages} > 1}
+			<div class="pagination">
+				{pagination_links}
+				<ul>
+					
+					{if {current_page} != '1'}
+						{previous_page}<li><a href="{pagination_url}">Prev</a></li>{/previous_page}
+					{/if}
+					{page}
+						{if current_page}<li class="active"><a href="#"{pagination_page_number}>{pagination_page_number}</a></li>
+						{if:else}<li><a href="{pagination_url}">{pagination_page_number}</a></li>{/if}
+					{/page}
+						{next_page}<li><a href="{pagination_url}">Next</a></li>{/next_page}
+				{/pagination_links}
+			</div>
+			{/if}
+			{/paginate} 
+			{/exp:channel:entries}
 
-		{paginate}
-            <p>Page {current_page} of {total_pages} pages {pagination_links}</p>
-        {/paginate}
-		{/exp:channel:entries}
-		</ul>
-		</div>
-	{/case}
-	
-	{case default="Yes"}
-		<div id="main">
-		{exp:channel:entries
-			channel="blog"
-			limit="1"
-			dynamic="no"
-			url_title="{segment_2}"
-			disable="categories|category_fields|member_data|pagination"}
-			<h3>{title}</h3> <span>- {entry_date format="%F %j, %Y"}</span>
-			<p>{cf_blog_body}</p>
-		{/exp:channel:entries}
-		</div>
-	{/case}
-     
-{/exp:switchee} 
+		{/case}
+		
+		{case default="Yes"}
+			{exp:channel:entries
+				channel="blog"
+				limit="1"
+				dynamic="no"
+				url_title="{segment_2}"
+				disable="categories|category_fields|member_data|pagination"}
+				<h3>{title}</h3> <span>- {entry_date format="%F %j, %Y"}</span>
+				<p>{cf_blog_body}</p>
+			{/exp:channel:entries}
+		{/case}
+		 
+	{/exp:switchee}
+</div>
