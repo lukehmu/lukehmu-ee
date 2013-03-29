@@ -1,1 +1,11 @@
 {embed='includes/header' location='contact'}
+{exp:channel:entries
+	channel="editorial"
+	limit="1"
+	dynamic="no"
+	url_title="{segment_1}"
+	disable="categories|category_fields|member_data|pagination"}
+
+	<h3>{title}</h3>
+	<p>{cf_editorial_body}</p>
+{/exp:channel:entries}
